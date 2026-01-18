@@ -9,7 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.5.24"
+    "chart.js": "^4.5.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.562.0",
+    "shadcn-vue": "^2.4.3",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vue": "^3.5.24",
+    "vue-chartjs": "^5.3.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",

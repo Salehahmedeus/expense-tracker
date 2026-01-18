@@ -5,6 +5,8 @@ import { useExpenses } from './composables/useExpenses';
 import StatsCard from './components/StatsCard.vue';
 import ExpenseForm from './components/ExpenseForm.vue';
 import HistoryList from './components/HistoryList.vue';
+import TotalSpentChart from './components/charts/TotalSpentChart.vue';
+import TransactionsChart from './components/charts/TransactionsChart.vue';
 
 // Use the logic composable
 const { 
@@ -40,15 +42,21 @@ onMounted(() => {
 
 <template>
   <div class="min-h-screen p-4 md:p-8 font-sans text-gray-800 bg-gradient-to-br from-indigo-50 to-gray-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 dark:text-gray-100 transition-colors duration-300">
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-6xl mx-auto">
       <!-- Header -->
       <header class="mb-10 text-center relative">
-        <button @click="toggleDark" :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-          class="absolute right-0 top-0 md:right-4 md:top-4 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-full p-2 shadow hover:scale-110 transition-transform">
-          <span v-if="!isDark">🌙</span>
-          <span v-else>☀️</span>
+        <button
+          type="button"
+          role="switch"
+          :aria-pressed="isDark"
+          @click="toggleDark"
+          :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+          class="absolute right-0 top-0 md:right-4 md:top-4 flex items-center justify-center h-11 w-11 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-full shadow hover:scale-110 transition-transform cursor-pointer"
+        >
+          <span class="text-xl" v-if="!isDark">🌙</span>
+          <span class="text-xl" v-else>☀️</span>
         </button>
-        <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-green-500 dark:from-indigo-300 dark:to-green-200 drop-shadow-lg mb-2">Monthly Tracker</h1>
+        <h1 class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-green-500 dark:from-indigo-300 dark:to-green-200 drop-shadow-lg mb-2">Monthly Tracker</h1>
         <p class="text-lg text-gray-500 dark:text-gray-300 tracking-wide">Clean Architecture <span class="mx-2">|</span> Local Storage</p>
       </header>
 
@@ -56,6 +64,12 @@ onMounted(() => {
       <div class="grid grid-cols-1 gap-6 mb-10 md:grid-cols-2">
         <StatsCard title="Total Spent" :value="totalSpent" color="indigo" />
         <StatsCard title="Transactions" :value="transactionCount" color="green" />
+      </div>
+
+      <!-- Charts -->
+      <div class="grid grid-cols-1 gap-6 mb-10 md:grid-cols-2">
+        <TotalSpentChart :expenses="expenses" :is-dark="isDark" />
+        <TransactionsChart :expenses="expenses" :is-dark="isDark" />
       </div>
 
       <!-- Main Content Area -->

@@ -7,11 +7,19 @@ defineProps({
 </script>
 
 <template>
-  <div class="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md border-l-4" 
-       :class="color === 'green' ? 'border-green-500 dark:border-green-400' : 'border-indigo-500 dark:border-indigo-300'">
-    <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-300 uppercase">{{ title }}</h2>
-    <p class="text-3xl font-bold text-gray-800 dark:text-gray-100">
-      <span v-if="title.includes('Spent')">$</span>{{ value }}
-    </p>
+  <div
+    class="relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm p-6 flex flex-col gap-2"
+  >
+    <div
+      class="absolute inset-y-0 left-0 w-1.5"
+      :class="color === 'green' ? 'bg-gradient-to-b from-emerald-300 to-emerald-500' : 'bg-gradient-to-b from-indigo-300 to-indigo-500'"
+      aria-hidden="true"
+    ></div>
+    <div class="pl-3">
+      <h2 class="text-xs font-semibold tracking-[0.08em] text-muted-foreground uppercase">{{ title }}</h2>
+      <p class="text-3xl font-extrabold leading-tight">
+        <span v-if="title.includes('Spent')">$</span>{{ value }}
+      </p>
+    </div>
   </div>
 </template>
