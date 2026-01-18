@@ -51,10 +51,9 @@ onMounted(() => {
           :aria-pressed="isDark"
           @click="toggleDark"
           :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-          class="absolute right-0 top-0 md:right-4 md:top-4 flex items-center justify-center h-11 w-11 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-full shadow hover:scale-110 transition-transform cursor-pointer"
+          class="absolute right-1.5 top-1.5 md:right-4 md:top-4 inline-flex items-center justify-center h-11 w-11 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 shadow hover:scale-110 transition-transform cursor-pointer pointer-events-auto z-20 focus:outline-none focus:ring-2 focus:ring-primary/60"
         >
-          <span class="text-xl" v-if="!isDark">🌙</span>
-          <span class="text-xl" v-else>☀️</span>
+          <span class="text-xl leading-none" aria-hidden="true">{{ isDark ? '☀️' : '🌙' }}</span>
         </button>
         <h1 class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-green-500 dark:from-indigo-300 dark:to-green-200 drop-shadow-lg mb-2">Monthly Tracker</h1>
         <p class="text-lg text-gray-500 dark:text-gray-300 tracking-wide">Clean Architecture <span class="mx-2">|</span> Local Storage</p>
