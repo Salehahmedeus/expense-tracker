@@ -16,17 +16,25 @@ const {
 } = useExpenses();
 
 const isDark = ref(false);
+const setDarkClass = (val) => {
+  if (val) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+};
 const toggleDark = () => {
   isDark.value = !isDark.value;
-  document.documentElement.classList.toggle('dark', isDark.value);
+  setDarkClass(isDark.value);
   localStorage.setItem('theme', isDark.value ? 'dark' : 'light');
 };
 onMounted(() => {
   const theme = localStorage.getItem('theme');
-  if (theme === 'dark') {
-    isDark.value = true;
-    document.documentElement.classList.add('dark');
-  }
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const docHasDark = document.documentElement.classList.contains('dark');
+  const initialDark = docHasDark || theme === 'dark' || (!theme && prefersDark);
+  isDark.value = initialDark;
+  setDarkClass(initialDark);
 });
 </script>
 
