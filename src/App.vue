@@ -65,9 +65,9 @@ onMounted(() => {
 
       <!-- Stats Area -->
       <div class="grid grid-cols-1 gap-6 mb-10 md:grid-cols-3">
-        <StatsCard title="Monthly Salary" :value="salary.toFixed(2)" color="primary" />
+        <StatsCard title="Available Balance" :value="salary.toFixed(2)" color="primary" />
         <StatsCard title="Total Spent" :value="totalSpent" color="indigo" />
-        <StatsCard title="Remaining Budget" :value="remainingBudget" :color="parseFloat(remainingBudget) >= 0 ? 'green' : 'red'" />
+        <StatsCard title="Transactions" :value="transactionCount.toString()" color="green" />
       </div>
 
       <!-- Charts -->
