@@ -4,6 +4,7 @@ import { ref, onMounted } from 'vue';
 import { useExpenses } from './composables/useExpenses';
 import StatsCard from './components/StatsCard.vue';
 import ExpenseForm from './components/ExpenseForm.vue';
+import SalaryForm from './components/SalaryForm.vue';
 import HistoryList from './components/HistoryList.vue';
 import TotalSpentChart from './components/charts/TotalSpentChart.vue';
 import TransactionsChart from './components/charts/TransactionsChart.vue';
@@ -11,10 +12,13 @@ import TransactionsChart from './components/charts/TransactionsChart.vue';
 // Use the logic composable
 const { 
   expenses, 
+  salary,
   addExpense, 
   removeExpense, 
+  setSalary,
   totalSpent, 
-  transactionCount 
+  transactionCount,
+  remainingBudget
 } = useExpenses();
 
 const isDark = ref(false);
@@ -60,9 +64,10 @@ onMounted(() => {
       </header>
 
       <!-- Stats Area -->
-      <div class="grid grid-cols-1 gap-6 mb-10 md:grid-cols-2">
+      <div class="grid grid-cols-1 gap-6 mb-10 md:grid-cols-3">
+        <StatsCard title="Monthly Salary" :value="salary.toFixed(2)" color="primary" />
         <StatsCard title="Total Spent" :value="totalSpent" color="indigo" />
-        <StatsCard title="Transactions" :value="transactionCount" color="green" />
+        <StatsCard title="Remaining Budget" :value="remainingBudget" :color="parseFloat(remainingBudget) >= 0 ? 'green' : 'red'" />
       </div>
 
       <!-- Charts -->
@@ -73,8 +78,9 @@ onMounted(() => {
 
       <!-- Main Content Area -->
       <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-        <!-- Left: Form -->
-        <div class="md:col-span-1">
+        <!-- Left: Forms -->
+        <div class="md:col-span-1 space-y-8">
+          <SalaryForm :initial-salary="salary" @update-salary="setSalary" />
           <ExpenseForm @add-transaction="addExpense" />
         </div>
 
