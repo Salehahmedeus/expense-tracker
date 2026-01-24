@@ -20,10 +20,15 @@ export function useExpenses() {
       id: Date.now(),
       ...expenseData
     });
+    salary.value -= expenseData.amount;
   };
 
   const removeExpense = (id) => {
-    expenses.value = expenses.value.filter(e => e.id !== id);
+    const expense = expenses.value.find(e => e.id === id);
+    if (expense) {
+      salary.value += expense.amount;
+      expenses.value = expenses.value.filter(e => e.id !== id);
+    }
   };
 
   const setSalary = (val) => {
@@ -40,7 +45,7 @@ export function useExpenses() {
   const transactionCount = computed(() => expenses.value.length);
 
   const remainingBudget = computed(() => {
-    return (salary.value - parseFloat(totalSpent.value)).toFixed(2);
+    return salary.value.toFixed(2);
   });
 
   // Persistence Watcher
