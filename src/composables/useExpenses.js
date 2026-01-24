@@ -4,10 +4,15 @@ import { storageRepository } from '../repositories/storageRepository';
 export function useExpenses() {
   // State
   const expenses = ref([]);
+  const salary = ref(0);
 
   // Actions
   const loadExpenses = () => {
     expenses.value = storageRepository.load();
+  };
+
+  const loadSalary = () => {
+    salary.value = storageRepository.loadSalary();
   };
 
   const addExpense = (expenseData) => {
@@ -21,6 +26,10 @@ export function useExpenses() {
     expenses.value = expenses.value.filter(e => e.id !== id);
   };
 
+  const setSalary = (val) => {
+    salary.value = parseFloat(val) || 0;
+  };
+
   // Computed Logic
   const totalSpent = computed(() => {
     return expenses.value
@@ -30,21 +39,33 @@ export function useExpenses() {
 
   const transactionCount = computed(() => expenses.value.length);
 
+  const remainingBudget = computed(() => {
+    return (salary.value - parseFloat(totalSpent.value)).toFixed(2);
+  });
+
   // Persistence Watcher
   watch(expenses, (newVal) => {
     storageRepository.save(newVal);
   }, { deep: true });
 
+  watch(salary, (newVal) => {
+    storageRepository.saveSalary(newVal);
+  });
+
   // Initial Load
   onMounted(() => {
     loadExpenses();
+    loadSalary();
   });
 
   return {
     expenses,
+    salary,
     addExpense,
     removeExpense,
+    setSalary,
     totalSpent,
-    transactionCount
+    transactionCount,
+    remainingBudget
   };
 }
